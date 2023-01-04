@@ -152,6 +152,8 @@ int set_speed(int speed) {
         send(SET_FAN,0x0100);
     } else if ( speed == 2 ) {
         send(SET_FAN,0x0200);
+    } else if ( speed == 3 ) {
+        send(SET_FAN,0x0300);
     } else {
         printf("Ignoring unknown speed: %d\n",speed);
     }
@@ -260,7 +262,11 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf ("Setting speed to: %d\n", speed );
-    printf ("Speed is now at: %d\n", set_speed(speed));
+    if (speed >= 0 && speed <= 3)
+      printf ("speed=%d,set=%d\n", (short)set_speed(speed), speed);
+
+    else
+      printf ("speed=%d\n", (short)send(GET_FAN,0));
+//      printf ("Setting speed to: %d\n", speed );
 
 }
